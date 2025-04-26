@@ -1,0 +1,39 @@
+
+.fsdb-form{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.fsdb-form.form-columns-2 p{
+	width: 45%;
+}
+.fsdb-form.form-columns-1 p{
+	width: 95%;
+}
+
+.fsdb-form.input-size-small input, .fsdb-form.input-size-small select,  .fsdb-form.input-size-small textarea{
+	font-size: 11px;
+}
+.fsdb-form.input-size-medium input, .fsdb-form.input-size-medium select, .fsdb-form.input-size-medium textarea{
+	font-size: 16px;
+}
+.fsdb-form.input-size-large input, .fsdb-form.input-size-large select, .fsdb-form.input-size-large textarea{
+	font-size: 21px;
+}
+
+
+.fsdb-button{
+	width: fit-content;
+}
+
+.fsdb-message{
+	width: 95%!important;
+}
+.fsdb-message textarea{
+	width: 90%!important;
+	min-height: 150px;
+}
+
+.fsdb-response{
+	width: 95%!important;
+}
