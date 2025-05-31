@@ -1,39 +1,111 @@
-
-.fsdb-form{
-	display: flex;
-	flex-wrap: wrap;
+/* General Form Layout */
+.fsdb-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Space between rows and items if they wrap */
 }
 
-.fsdb-form.form-columns-2 p{
-	width: 45%;
-}
-.fsdb-form.form-columns-1 p{
-	width: 95%;
-}
-
-.fsdb-form.input-size-small input, .fsdb-form.input-size-small select,  .fsdb-form.input-size-small textarea{
-	font-size: 11px;
-}
-.fsdb-form.input-size-medium input, .fsdb-form.input-size-medium select, .fsdb-form.input-size-medium textarea{
-	font-size: 16px;
-}
-.fsdb-form.input-size-large input, .fsdb-form.input-size-large select, .fsdb-form.input-size-large textarea{
-	font-size: 21px;
+.fsdb-form p { /* General styling for paragraphs holding form elements */
+    margin: 0; /* Remove default paragraph margin */
+    padding: 0; /* Remove default paragraph padding */
+    /* width and flex-basis will be set by column-specific rules */
 }
 
-
-.fsdb-button{
-	width: fit-content;
+.fsdb-form.form-columns-1 p {
+    flex-basis: 100%;
+    width: 100%;
 }
 
-.fsdb-message{
-	width: 95%!important;
-}
-.fsdb-message textarea{
-	width: 90%!important;
-	min-height: 150px;
+.fsdb-form.form-columns-2 p {
+    flex-basis: calc(50% - 5px); /* (100% / 2) - (gap / 2) */
+    width: calc(50% - 5px);     /* Fallback */
 }
 
-.fsdb-response{
-	width: 95%!important;
+/* General styling for inputs, selects, and textareas */
+.fsdb-form input[type="text"],
+.fsdb-form input[type="email"],
+.fsdb-form input[type="tel"],
+.fsdb-form input[type="url"],
+.fsdb-form input[type="password"],
+.fsdb-form input[type="search"],
+.fsdb-form input[type="number"],
+.fsdb-form select,
+.fsdb-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px; /* Space between label (if any) and input */
+    box-sizing: border-box;
+    border: 1px solid #ccc; /* Default border for form elements */
+}
+
+.fsdb-form textarea {
+    min-height: 120px;
+    /* width: 100% and box-sizing: border-box are covered by the general rule above */
+}
+
+/* Input Size Specifics - applies font-size to the input elements themselves */
+.fsdb-form.input-size-small input,
+.fsdb-form.input-size-small select,
+.fsdb-form.input-size-small textarea {
+    font-size: 11px;
+    /* Consider adding specific padding here if needed, e.g., padding: 4px; */
+}
+.fsdb-form.input-size-medium input,
+.fsdb-form.input-size-medium select,
+.fsdb-form.input-size-medium textarea {
+    font-size: 16px;
+    /* Consider adding specific padding here if needed, e.g., padding: 8px; */
+}
+.fsdb-form.input-size-large input,
+.fsdb-form.input-size-large select,
+.fsdb-form.input-size-large textarea {
+    font-size: 21px;
+    /* Consider adding specific padding here if needed, e.g., padding: 12px; */
+}
+
+/* Button Container */
+.fsdb-button { /* This is the <p> tag wrapping the button */
+    width: 100%; /* Allows text-align from parent (PHP div) to work */
+    margin-top: 10px; /* Space above the button paragraph */
+    /* text-align property is removed; alignment controlled by parent div style attribute */
+}
+
+/* The actual button element */
+.fsdb-button button {
+   /* Add theme-consistent button styles or rely on defaults.
+      Example:
+      padding: 10px 15px;
+      background-color: #0073aa;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 3px; */
+}
+
+/* Required field indicator */
+.fsdb-required {
+    color: red;
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+/* Response Message Styling */
+#fsdb-response { /* ID selector for specificity */
+    width: 100%; /* Take full width of its container */
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+}
+
+#fsdb-response.success {
+    border-color: green;
+    color: green;
+    background-color: #f0fff0;
+}
+
+#fsdb-response.error {
+    border-color: red;
+    color: red;
+    background-color: #fff0f0;
 }

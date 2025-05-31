@@ -1,5 +1,11 @@
 <?php
-register_activation_hook(__FILE__, 'fsdb_create_table');
+
+// Combined activation function
+function fsdb_activate_plugin() {
+    fsdb_create_table();
+    fsdb_update_db_check();
+}
+register_activation_hook(FSDB_DIR . 'form-contatto-db.php', 'fsdb_activate_plugin'); // Assumes FSDB_DIR is defined and points to plugin root
 
 function fsdb_create_table() {
     global $wpdb;
@@ -21,14 +27,34 @@ function fsdb_create_table() {
     dbDelta($sql);
 }
 
-fsdb_create_table();
+// Function to check and add the 'other_data' column if it doesn't exist.
+function fsdb_update_db_check() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'fsdb_forms';
 
+    // Check if the 'other_data' column exists
+    $columns = $wpdb->get_col("DESCRIBE {$table_name}"); // Get an array of column names
 
+    if (!in_array('other_data', $columns)) {
+        // Column does not exist, so add it
+        // Using NULL DEFAULT NULL explicitly for clarity, though TEXT columns are nullable by default.
+        $alter_query = "ALTER TABLE {$table_name} ADD COLUMN other_data TEXT NULL DEFAULT NULL";
+        $wpdb->query($alter_query);
+        // Optional: Log that the column was added
+        error_log('FSDB: Added other_data column to ' . $table_name);
+    }
+}
+
+// No direct calls to fsdb_create_table() or fsdb_update_db_check() here anymore.
+// They are called via the activation hook.
 
 add_action('admin_post_fsdb_export_html_pdf', 'fsdb_export_html_pdf');
 
 function fsdb_export_html_pdf() {
     global $wpdb;
+
+    // Check if 'other_data' column should be excluded or handled differently for PDF export
+    // For now, it will be included if it exists, as get_results selects all columns.
 
     $per_page = 10;
     $paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
